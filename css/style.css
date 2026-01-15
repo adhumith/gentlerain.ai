@@ -1,4 +1,4 @@
-/* Reset */
+
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
 
 }
 
-/* Header */
+
 .header {
   position: fixed;
   top: 0;
@@ -57,7 +57,6 @@ body {
   color: white;
 }
 
-/* Hero with Parallax */
 .hero {
   height: 100vh;
   padding-top: 120px;
@@ -78,7 +77,6 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Features */
 .features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -95,7 +93,6 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Footer */
 .footer {
   text-align: center;
   padding: 1rem;
