@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gentlerain Clone</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <!-- Header / Navigation -->
+    
   <header class="header">
     <nav class="nav">
       <div class="logo">Gentlerain</div>
@@ -29,22 +30,57 @@
   </header>
 
   <section class="hero">
-    <h1>
-      Leverage AI to grow valuable skills through immersive role play
-    </h1>
+  <div class="parallax layer-back"></div>
+  <div class="parallax layer-mid"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">Leverage AI to grow valuable skills</h1>
+  </div>
+</section>
+
+
     <a href="#" class="btn primary">Try Now</a>
   </section>
 
-  <section class="features">
-    <div class="feature">Practice</div>
-    <div class="feature">Upskill</div>
-    <div class="feature">Play</div>
-    <div class="feature">Improve</div>
-  </section>
+ <section class="features">
+  <div class="flip-card" data-aos="fade-up">
+    <div class="flip-inner">
+      <div class="flip-front">Practice</div>
+      <div class="flip-back">Practice real-world skills with AI</div>
+    </div>
+  </div>
+
+  <div class="flip-card" data-aos="fade-up" data-aos-delay="150">
+    <div class="flip-inner">
+      <div class="flip-front">Upskill</div>
+      <div class="flip-back">Improve skills through guided learning</div>
+    </div>
+  </div>
+
+  <div class="flip-card" data-aos="fade-up" data-aos-delay="300">
+    <div class="flip-inner">
+      <div class="flip-front">Play</div>
+      <div class="flip-back">Learn through interactive experiences</div>
+    </div>
+  </div>
+</section>
+
 
   <footer class="footer">
     <p>© 2026 Gentlerain Clone</p>
   </footer>
   <script src="js/main.js"></script>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+    AOS.refresh();
+  });
+</script>
+
 </body>
 </html>
