@@ -1,71 +1,80 @@
-# gentlerain.ai – Frontend Clone
+#  gentlerain.ai – Frontend Clone & Liquid Motion Engine
 
-This project is a front-end clone inspired by the gentlerain.ai landing page.  
-It was developed in multiple stages to progressively build structure, styling, and interactive animations using modern web technologies.
-
----
-
-## Task 1 – Base Structure & Layout
-
-Task 1 focused on creating a clean and scalable foundation for the project.
-
-### Features Implemented
-- Semantic HTML structure for clear layout and accessibility
-- Base CSS styling for layout, spacing, and typography
-- Fixed navigation header
-- Hero section with a simple parallax effect
-- Responsive layout for smaller screen sizes
-
-### Technologies Used
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
+This project is a high-performance, motion-centric landing page developed to replicate the fluid aesthetics of the Gentle Rain platform. It progressively evolves from a semantic layout into a complex interactive environment featuring a **custom-coded 2D water physics engine** and a **retro-analog CRT visual layer**.
 
 ---
 
-## Task 2 – Animations & Interactions
+##  Technical Architecture
 
-Task 2 focused on enhancing the user experience through animations, motion effects, and interactive UI components.
+### 1. Fluid Dynamic Physics (Water Effect)
+Unlike standard CSS animations, the hero background utilizes a **Discrete Sine Wave Propagation** algorithm rendered on an HTML5 Canvas.
+* **Buffer Swapping:** The engine maintains two `Int16Array` buffers. Every frame, it calculates the new state of a pixel based on the average of its neighbors in the previous frame, then subtracts its current state to create wave oscillation.
+* **Circular Energy Injection:** To ensure ripples look natural rather than digital, energy is injected using a circular distance formula ($x^2 + y^2 < r^2$).
+* **Damping & Momentum:** A high damping factor (`0.985`) is applied to ensure waves have realistic inertial decay, feeling like a "heavy" rolling liquid.
 
-### Features Implemented
-- **Multi-layer Parallax**
-  - Implemented layered parallax effects in the hero section to create visual depth during scroll.
 
-- **Scroll-based Animations**
-  - Added smooth scroll-triggered animations to content sections using **AOS (Animate On Scroll)**.
 
-- **Interactive Flip Cards**
-  - Built 3D flip cards using pure CSS transforms to reveal additional content on hover.
+### 2. 3D Parallax Refraction
+To create a "3D depth" look for the "gentlerain" text, the engine implements **Coordinate-Based Displacement Mapping**:
+* **The Bottom-of-the-Pool Effect:** The text is rendered to an offscreen buffer. The main loop calculates the "slope" of the water surface.
+* **Parallax Math:** The engine uses the surface slope to offset the lookup coordinates for the text pixels. By adjusting the `depth` multiplier, the text appears to sit on the floor of the pool, warping realistically as swells pass over it.
+* **Color Integrity:** A custom rendering bypass is used to ensure the text remains pure white, preventing the orange background from bleeding into the letters.
 
-- **Text Animations**
-  - Applied subtle entrance animations to hero and section text for a polished visual flow.
 
----
 
-## Tools & Libraries
+### 3. CRT Visual Layer
+The "Old TV" aesthetic is achieved through a multi-layered post-processing approach:
+* **Fractal Noise:** A high-frequency SVG noise filter is applied as a CSS overlay to create analog grain.
+* **Scanlines:** A linear-gradient pattern mimics the physical aperture grille of a CRT monitor.
+* **Per-Pixel Jitter:** The JavaScript loop applies a random brightness "jitter" to every pixel in every frame, simulating the vibrating phosphors of a tube television.
 
-### Recommended Tools
-- GSAP
-- AOS (Animate On Scroll)
-- Rellax.js
-- Locomotive Scroll
 
-### Tools Used in This Project
-- **AOS (Animate On Scroll)** for scroll-triggered animations
-- **Vanilla JavaScript** for parallax behavior
-- **CSS3 animations and 3D transforms** for flip cards and text effects
 
-The chosen tools prioritize simplicity, performance, and maintainability while meeting the animation requirements of the task.
+### 4. Synchronized Smooth Scrolling (Lenis + GSAP)
+Standard browser scrolling is discrete and "step-based." This project uses **Lenis** to normalize input into a continuous fluid stream.
+* **RequestAnimationFrame (RAF):** A unified loop synchronizes Lenis, GSAP, and the Water Physics at the monitor's native refresh rate.
+* **Viewport Pinning:** The horizontal "Product" section locks in place while the internal track translates along the X-axis based on the calculation:
+    $$ScrollDistance = TrackWidth - ViewportWidth$$
 
 ---
 
-## Approach
+##  Features & Tasks
 
-The implementation focuses on clean structure, readable code, and purposeful animations.  
-Effects are kept subtle to enhance usability without overloading the interface or introducing unnecessary dependencies.
+### Task 1 – Base Structure
+- **Semantic HTML5:** Clean layout for SEO and accessibility.
+- **Responsive Design:** Fluid typography and flex-grid systems.
+- **Fixed Navbar:** A glassmorphism header using `backdrop-filter: blur`.
+
+### Task 2 – Animations & Interactions
+- **3D Flip Cards:** CSS `preserve-3d` context with custom `cubic-bezier` timing for non-linear physical response.
+- **Smooth Anchor Bridge:** Lenis intercepts toolbar navigation clicks to provide a seamless slide to sections rather than a sudden jump.
+- **Section Reveals:** GSAP `ScrollTrigger` is used to stagger the entrance of feature cards and animate UI elements as they enter the viewport.
 
 ---
 
-## Status
+##  Dependency Stack
+| Library | Purpose |
+| :--- | :--- |
+| **Lenis** | Smooth scroll physics and inertial management. |
+| **GSAP** | High-speed mathematical interpolation engine. |
+| **ScrollTrigger** | Coordinate mapping for scroll-bound timelines. |
+| **Vanilla JS** | Core 2D Water Physics Engine & Refraction Logic. |
 
-Task 1 and Task 2 completed successfully.
+---
+
+##  Use of Artificial Intelligence
+Artificial Intelligence was utilized sparingly during the development lifecycle. The role of AI was restricted to the generation of initial CSS boilerplate and the validation of cross-browser compatibility. All core animation logic—specifically the 2D wave propagation, the per-pixel refraction math, and the Lenis-to-GSAP proxy integration—was authored manually to ensure precise creative interpolation.
+
+---
+
+##  Performance Optimization
+To ensure a stable 60FPS:
+* **Physics Downsampling:** The engine calculates physics on a grid scaled at `1.5x` lower than the visual resolution, using CSS `image-rendering: auto` to smooth the result.
+* **Bitwise Operations:** The physics loop uses bit-shifting (`>> 1`) instead of division to maximize calculation speed.
+* **GPU Acceleration:** Elements are forced onto the GPU using `transform: translateZ(0)` and `will-change`.
+
+---
+
+**Status:** Completed.  
+**Author:** GentleRain Development Team  
+**Year:** 2026
